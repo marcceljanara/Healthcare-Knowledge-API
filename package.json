@@ -1,10 +1,4 @@
 {
-  "dependencies": {
-    "express": "^4.19.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.0"
-  },
   "name": "healthcare-knowledge-api",
   "description": "<h1>Headcare Knowledge API</h1>\r <p>Aplikasi ini merupakan sebuah aplikasi server side untuk menyediakan API endpoint dalam rangka mendukung kinerja frond end app</p>",
   "version": "1.0.0",
@@ -26,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/marcceljanara/Healthcare-Knowledge-API/issues"
   },
-  "homepage": "https://github.com/marcceljanara/Healthcare-Knowledge-API#readme"
+  "homepage": "https://github.com/marcceljanara/Healthcare-Knowledge-API#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
 }
