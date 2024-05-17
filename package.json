@@ -4,5 +4,27 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
-  }
+  },
+  "name": "healthcare-knowledge-api",
+  "description": "<h1>Headcare Knowledge API</h1>\r <p>Aplikasi ini merupakan sebuah aplikasi server side untuk menyediakan API endpoint dalam rangka mendukung kinerja frond end app</p>",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcceljanara/Healthcare-Knowledge-API.git"
+  },
+  "keywords": [
+    "backend",
+    "capstone",
+    "dicoding"
+  ],
+  "author": "I Nengah Marccel Janara Brata Cipta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcceljanara/Healthcare-Knowledge-API/issues"
+  },
+  "homepage": "https://github.com/marcceljanara/Healthcare-Knowledge-API#readme"
 }
