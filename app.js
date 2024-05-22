@@ -2,6 +2,8 @@ import express from 'express';
 import db from './src/configs/database.js';
 const app = express();
 import router from './src/routes/routes.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 try {
     await db.authenticate();
