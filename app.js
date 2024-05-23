@@ -1,18 +1,22 @@
 import express from 'express';
-import db from './src/configs/database.js';
-const app = express();
-import router from './src/routes/routes.js';
 import dotenv from 'dotenv';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import db from './src/configs/database.js';
+import router from './src/routes/routes.js';
 dotenv.config();
 
+const app = express();
 try {
     await db.authenticate();
     console.log('Database Connected...');
 } catch (error) {
     console.error(error);
 }
+
+app.use(cors({credentials : true, origin : 'http://localhost:3000'}))
+app.use(cookieParser());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 app.use(router);
 
