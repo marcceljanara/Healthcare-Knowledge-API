@@ -71,7 +71,7 @@ export const Login = async (req, res) => {
         const email = user.email;
         const role = user.role;
         const accessToken = jwt.sign({ userId, name, email, role }, process.env.ACCESS_TOKEN, {
-            expiresIn: '1m',
+            expiresIn: '20s',
         });
         const refreshToken = jwt.sign({ userId, name, email, role }, process.env.REFRESH_TOKEN, {
             expiresIn: '1d',
@@ -96,22 +96,29 @@ export const Login = async (req, res) => {
 
 export const Logout = async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken) return res.sendStatus(204);
+    if (!refreshToken) return res.status(400).json({ msg: 'Refresh token tidak ada' });
 
-    const user = await Users.findOne({
-        where: {
-            refresh_token: refreshToken
-        }
-    });
+    try {
+        const user = await Users.findOne({
+            where: {
+                refresh_token: refreshToken
+            }
+        });
 
-    if (!user) return res.sendStatus(204);
+        if (!user) return res.status(404).json({ msg: 'Pengguna tidak ditemukan' });
 
-    const userId = user.id;
-    await Users.update({ refresh_token: null }, {
-        where: {
-            id: userId
-        }
-    });
-    res.clearCookie('refreshToken');
-    return res.sendStatus(200);
+        const userId = user.id;
+        await Users.update({ refresh_token: null }, {
+            where: {
+                id: userId
+            }
+        });
+
+        res.clearCookie('refreshToken');
+        return res.sendStatus(200);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ msg: 'Terjadi kesalahan pada server' });
+    }
 };
+
