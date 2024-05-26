@@ -48,3 +48,37 @@ export const createMedicine = async (req, res) => {
     }
 };
 
+export const getMedicines = async (req, res) => {
+    try {
+        // Mengambil parameter limit dan offset dari query string
+        const limit = req.query.limit ? parseInt(req.query.limit) : 10;
+        const page = req.query.page ? parseInt(req.query.page) : 1;
+        const offset = (page - 1) * limit;
+
+        // Mengambil data obat dengan memperhitungkan limit dan offset
+        const medicines = await Medicines.findAll({
+            limit: limit,
+            offset: offset,
+        });
+
+        // Menghitung total data
+        const totalCount = await Medicines.count({
+        });
+
+        // Menghitung total halaman
+        const totalPages = Math.ceil(totalCount / limit);
+
+        // Mengirim respon dengan data obat dan informasi halaman
+        return res.status(200).json({
+            medicines: medicines,
+            page: page,
+            limit: limit,
+            totalPages: totalPages
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            msg: "Gagal mengambil data obat"
+        });
+    }
+};
