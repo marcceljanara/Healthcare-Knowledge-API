@@ -32,6 +32,7 @@ export const createMedicine = async (req, res) => {
             composition: composition,
             drug_restrictions: drugRestrictions,
             maximum_prescription: maximumPrescription,
+            user_id: req.userId,
         });
 
         // Mengirim respon berhasil
@@ -46,3 +47,4 @@ export const createMedicine = async (req, res) => {
         });
     }
 };
+
