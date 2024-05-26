@@ -15,6 +15,6 @@ router.get('/token', refreshToken);
 router.delete('/logout', Logout);
 
 // CRUD medicines route
-router.post('/medicines', createMedicine)
+router.post('/medicines',verifyToken, createMedicine)
 
 export default router;

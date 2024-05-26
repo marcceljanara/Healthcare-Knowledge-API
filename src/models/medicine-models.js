@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import db from "../configs/database.js";
+import Users from "./user-models.js";
 
 const Medicines = db.define('medicines',{
     name : {
@@ -46,7 +47,14 @@ const Medicines = db.define('medicines',{
         type : DataTypes.STRING,
         allowNull : true,
     },
-    
+    user_id: { // Menambahkan kolom user_id
+        type: DataTypes.STRING,
+        allowNull: false,
+        references: {
+            model: Users, // Menunjuk ke tabel Users
+            key: 'id'
+        }
+    },
 },{
     freezeTableName : true,
 });
