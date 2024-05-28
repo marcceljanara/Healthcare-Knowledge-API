@@ -114,7 +114,9 @@ export const Logout = async (req, res) => {
         });
 
         res.clearCookie('refreshToken');
-        return res.sendStatus(200);
+        return res.status(200).json({
+            msg : "Telah logout"
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ msg: 'Terjadi kesalahan pada server' });
