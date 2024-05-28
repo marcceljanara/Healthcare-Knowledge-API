@@ -3,9 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation</title>
+    <title>API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+        h3 {
+            margin-top: 20px;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        pre {
+            background-color: #f3f3f3;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, I am Documentation API!!!</h1>
+    <div class="container">
+        <h1>API Documentation</h1>
+
+        <h2>Users</h2>
+        <h3>GET /users</h3>
+        <p>Get all users.</p>
+
+        <h3>POST /users</h3>
+        <p>Register a new user.</p>
+
+        <h3>POST /login</h3>
+        <p>Login to the system.</p>
+
+        <h3>GET /token</h3>
+        <p>Refresh access token.</p>
+
+        <h3>DELETE /logout</h3>
+        <p>Logout from the system.</p>
+
+        <h2>Medicines</h2>
+        <h3>POST /medicines</h3>
+        <p>Create a new medicine.</p>
+
+        <h3>GET /medicinesdoctor</h3>
+        <p>Get medicines for doctors.</p>
+
+        <h3>PUT /medicines/:id</h3>
+        <p>Update a medicine by ID.</p>
+
+        <h3>DELETE /medicines/:id</h3>
+        <p>Delete a medicine by ID.</p>
+
+        <h3>GET /medicines</h3>
+        <p>Get all medicines.</p>
+
+        <h3>GET /medicines/:id</h3>
+        <p>Get a medicine by ID.</p>
+    </div>
 </body>
 </html>
