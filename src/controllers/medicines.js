@@ -72,9 +72,11 @@ export const getMedicines = async (req, res) => {
 
         // Mengambil data obat dengan memperhitungkan limit, offset, dan pencarian
         const medicines = await Medicines.findAll({
+            attributes: ['id','name', 'class_therapy', 'drug_restrictions'],
             limit: limit,
             offset: offset,
-            where: whereClause
+            where: whereClause,
+            order: [['id', 'ASC']],
         });
 
         // Menghitung total data
@@ -127,9 +129,11 @@ export const getMedicinesDoctor = async (req, res) => {
 
         // Mengambil data obat dengan memperhitungkan limit, offset, dan pencarian
         const medicines = await Medicines.findAll({
+            attributes: ['name', 'class_therapy', 'drug_restrictions'],
             limit: limit,
             offset: offset,
-            where: whereClause
+            where: whereClause,
+            order: [['id', 'ASC']]
         });
 
         // Menghitung total data
@@ -151,6 +155,121 @@ export const getMedicinesDoctor = async (req, res) => {
         console.error(error);
         return res.status(500).json({
             msg: "Gagal mengambil data obat"
+        });
+    }
+};
+
+export const getDetailMedicineById = async (req, res) => {
+    try {
+        // Mengambil parameter ID dari URL
+        const { id } = req.params;
+
+        // Mengambil detail obat berdasarkan ID
+        const medicine = await Medicines.findByPk(id);
+
+        // Jika data obat tidak ditemukan, kembalikan status 404
+        if (!medicine) {
+            return res.status(404).json({
+                msg: "Data obat tidak ditemukan"
+            });
+        }
+
+        // Mengirim respon dengan data obat
+        return res.status(200).json(medicine);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            msg: "Gagal mengambil data obat"
+        });
+    }
+};
+
+export const updateMedicine = async (req, res) => {
+    const { id } = req.params; // Mendapatkan id dari parameter URL
+    const {
+        name, classTherapy, subClassTherapy1, subClassTherapy2, subClassTherapy3,
+        power, unit, type, composition, drugRestrictions, maximumPrescription
+    } = req.body;
+
+    try {
+        // Mengambil data obat berdasarkan id
+        const medicine = await Medicines.findByPk(id);
+
+        if (!medicine) {
+            return res.status(404).json({
+                msg: "Obat tidak ditemukan"
+            });
+        }
+
+        // Memeriksa apakah pengguna memiliki izin untuk memperbarui obat (jika bukan admin)
+        if (req.userRole !== 'admin' && medicine.user_id !== req.userId) {
+            return res.status(403).json({
+                msg: "Anda tidak memiliki izin untuk memperbarui obat ini"
+            });
+        }
+
+        // Memperbarui data obat
+        await Medicines.update({
+            name: name,
+            class_therapy: classTherapy,
+            subclass_therapy1: subClassTherapy1,
+            subclass_therapy2: subClassTherapy2,
+            subclass_therapy3: subClassTherapy3,
+            power: power,
+            unit: unit,
+            type: type,
+            composition: composition,
+            drug_restrictions: drugRestrictions,
+            maximum_prescription: maximumPrescription
+        }, {
+            where: {
+                id: id
+            }
+        });
+
+        // Mengirim respon berhasil
+        return res.status(200).json({
+            msg: "Data obat berhasil diperbarui"
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            msg: "Data obat gagal diperbarui"
+        });
+    }
+};
+
+export const deleteMedicineById = async (req, res) => {
+    try {
+        // Mengambil parameter ID dari URL
+        const { id } = req.params;
+
+        // Mengambil data obat berdasarkan ID
+        const medicine = await Medicines.findByPk(id);
+
+        // Jika data obat tidak ditemukan, kembalikan status 404
+        if (!medicine) {
+            return res.status(404).json({
+                msg: "Data obat tidak ditemukan"
+            });
+        }
+
+        // Menghapus data obat berdasarkan ID
+        await Medicines.destroy({
+            where: {
+                id: id
+            }
+        });
+
+        // Mengirim respon berhasil
+        return res.status(200).json({
+            msg: "Data obat berhasil dihapus"
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            msg: "Gagal menghapus data obat"
         });
     }
 };
