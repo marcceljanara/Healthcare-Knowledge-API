@@ -1,6 +1,6 @@
 import express from "express";
 import { getUsers, Register, Login, Logout } from "../controllers/users.js";
-import { verifyToken } from "../middleware/verify-token.js";
+import { authorizeMedicineActions, verifyToken } from "../middleware/verify-token.js";
 import { refreshToken } from "../controllers/refresh-token.js";
 import { createMedicine, deleteMedicineById, getDetailMedicineById, getMedicines, getMedicinesDoctor, updateMedicine } from "../controllers/medicines.js";
 
@@ -17,8 +17,8 @@ router.delete('/logout', Logout);
 // CRUD medicines route
 router.post('/medicines',verifyToken, createMedicine);
 router.get('/medicinesdoctor',verifyToken, getMedicinesDoctor);
-router.put('/medicines/:id', verifyToken, updateMedicine);
-router.delete('/medicines/:id',verifyToken, deleteMedicineById);
+router.put('/medicines/:id', verifyToken,authorizeMedicineActions, updateMedicine);
+router.delete('/medicines/:id',verifyToken,authorizeMedicineActions, deleteMedicineById);
 
 // CRUD Multi User
 router.get('/medicines',getMedicines);
