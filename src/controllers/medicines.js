@@ -129,7 +129,7 @@ export const getMedicinesDoctor = async (req, res) => {
 
         // Mengambil data obat dengan memperhitungkan limit, offset, dan pencarian
         const medicines = await Medicines.findAll({
-            attributes: ['name', 'class_therapy', 'drug_restrictions'],
+            attributes: ["id",'name', 'class_therapy', 'drug_restrictions'],
             limit: limit,
             offset: offset,
             where: whereClause,
