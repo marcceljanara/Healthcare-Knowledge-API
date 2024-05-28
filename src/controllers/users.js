@@ -1,7 +1,6 @@
 import Users from "../models/user-models.js";
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { nanoid } from "nanoid";
 
 export const getUsers = async (req, res) => {
     try {
@@ -71,7 +70,7 @@ export const Login = async (req, res) => {
         const email = user.email;
         const role = user.role;
         const accessToken = jwt.sign({ userId, name, email, role }, process.env.ACCESS_TOKEN, {
-            expiresIn: '20s',
+            expiresIn: '40s',
         });
         const refreshToken = jwt.sign({ userId, name, email, role }, process.env.REFRESH_TOKEN, {
             expiresIn: '1d',
