@@ -2,7 +2,7 @@ import express from "express";
 import { getUsers, Register, Login, Logout } from "../controllers/users.js";
 import { verifyToken } from "../middleware/verify-token.js";
 import { refreshToken } from "../controllers/refresh-token.js";
-import { createMedicine, getMedicines } from "../controllers/medicines.js";
+import { createMedicine, getMedicines, getMedicinesDoctor } from "../controllers/medicines.js";
 
 
 const router = express.Router();
@@ -16,6 +16,7 @@ router.delete('/logout', Logout);
 
 // CRUD medicines route
 router.post('/medicines',verifyToken, createMedicine);
+router.get('/medicinesdoctor',verifyToken, getMedicinesDoctor);
 
 // CRUD guest 
 router.get('/medicines',getMedicines);

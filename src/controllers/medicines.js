@@ -1,4 +1,6 @@
+import { Op } from "sequelize";
 import Medicines from "../models/medicine-models.js";
+
 
 export const createMedicine = async (req, res) => {
     const {
@@ -50,19 +52,89 @@ export const createMedicine = async (req, res) => {
 
 export const getMedicines = async (req, res) => {
     try {
-        // Mengambil parameter limit dan offset dari query string
+        // Mengambil parameter limit, offset, dan search dari query string
         const limit = req.query.limit ? parseInt(req.query.limit) : 10;
         const page = req.query.page ? parseInt(req.query.page) : 1;
         const offset = (page - 1) * limit;
+        const searchQuery = req.query.search || '';
 
-        // Mengambil data obat dengan memperhitungkan limit dan offset
+        // Menyiapkan klausa where untuk pencarian
+        let whereClause = {};
+        if (searchQuery) {
+            whereClause = {
+                [Op.or]: [
+                    { name: { [Op.like]: `%${searchQuery}%` } },
+                    { class_therapy: { [Op.like]: `%${searchQuery}%` } },
+                    { drug_restrictions: { [Op.like]: `%${searchQuery}%` } }
+                ]
+            };
+        }
+
+        // Mengambil data obat dengan memperhitungkan limit, offset, dan pencarian
         const medicines = await Medicines.findAll({
             limit: limit,
             offset: offset,
+            where: whereClause
         });
 
         // Menghitung total data
         const totalCount = await Medicines.count({
+            where: whereClause
+        });
+
+        // Menghitung total halaman
+        const totalPages = Math.ceil(totalCount / limit);
+
+        // Mengirim respon dengan data obat dan informasi halaman
+        return res.status(200).json({
+            medicines: medicines,
+            page: page,
+            limit: limit,
+            totalPages: totalPages
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            msg: "Gagal mengambil data obat"
+        });
+    }
+};
+
+export const getMedicinesDoctor = async (req, res) => {
+    try {
+        // Mengambil parameter limit, offset, dan search dari query string
+        const limit = req.query.limit ? parseInt(req.query.limit) : 10;
+        const page = req.query.page ? parseInt(req.query.page) : 1;
+        const offset = (page - 1) * limit;
+        const searchQuery = req.query.search || '';
+
+        // Menyiapkan filter berdasarkan role dan pencarian
+        let whereClause = {};
+        if (req.userRole !== 'admin') {
+            whereClause.user_id = req.userId; // Filter data berdasarkan user_id jika bukan admin
+        }
+        
+        if (searchQuery) {
+            whereClause = {
+                ...whereClause,
+                [Op.or]: [
+                    { name: { [Op.like]: `%${searchQuery}%` } },
+                    { class_therapy: { [Op.like]: `%${searchQuery}%` } },
+                    { drug_restrictions: { [Op.like]: `%${searchQuery}%` } }
+                ]
+            };
+        }
+
+        // Mengambil data obat dengan memperhitungkan limit, offset, dan pencarian
+        const medicines = await Medicines.findAll({
+            limit: limit,
+            offset: offset,
+            where: whereClause
+        });
+
+        // Menghitung total data
+        const totalCount = await Medicines.count({
+            where: whereClause
         });
 
         // Menghitung total halaman
