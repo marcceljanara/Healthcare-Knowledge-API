@@ -38,7 +38,7 @@ export const createMedicine = async (req, res) => {
         });
 
         // Mengirim respon berhasil
-        return res.status(200).json({
+        return res.status(201).json({
             msg: "Data obat berhasil ditambahkan"
         });
 
