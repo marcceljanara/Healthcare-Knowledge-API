@@ -12,8 +12,8 @@ const app = express();
 try {
     await db.authenticate();
     console.log('Database Connected...');
-    await Medicines.sync();
     await Users.sync();
+    await Medicines.sync();
 } catch (error) {
     console.error(error);
 }
@@ -23,9 +23,6 @@ app.set('views', 'src/views')
 app.use(cookieParser());
 app.use(cors({ origin : '*',credentials : true}))
 app.use(express.json());
-app.get('/', (req, res) => {
-    res.render('documentation');
-});
 
 app.use(router);
 
