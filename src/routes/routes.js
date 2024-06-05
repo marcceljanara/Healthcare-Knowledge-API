@@ -7,6 +7,11 @@ import { createMedicine, deleteMedicineById, getDetailMedicineById, getMedicines
 
 const router = express.Router();
 
+// API DOC
+router.get('/', (req, res) => {
+    res.render('documentation');
+});
+
 // Register, Login & Logout route
 router.get('/users',verifyToken, getUsers);
 router.post('/users', Register);
