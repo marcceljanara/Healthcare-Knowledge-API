@@ -125,3 +125,46 @@ export const Logout = async (req, res) => {
     }
 };
 
+export const changePassword = async (req, res) => {
+    const { oldPassword, newPassword, confNewPassword } = req.body;
+
+    if (newPassword !== confNewPassword) {
+        return res.status(400).json({
+            msg: 'Password baru dan Konfirmasi Password Tidak Cocok',
+        });
+    }
+
+    try {
+        const user = await Users.findOne({
+            where: {
+                id: req.userId,
+            }
+        });
+
+        if (!user) return res.status(404).json({
+            msg: 'Pengguna tidak ditemukan',
+        });
+
+        const match = await bcryptjs.compare(oldPassword, user.password);
+        if (!match) return res.status(400).json({
+            msg: 'Password lama salah',
+        });
+
+        const salt = await bcryptjs.genSalt();
+        const hashNewPassword = await bcryptjs.hash(newPassword, salt);
+
+        await Users.update({ password: hashNewPassword }, {
+            where: {
+                id: req.userId
+            }
+        });
+
+        res.json({
+            msg: 'Password berhasil diubah',
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: "Terjadi kesalahan pada server" });
+    }
+};
+
