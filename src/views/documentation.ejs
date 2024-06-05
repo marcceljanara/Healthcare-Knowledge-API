@@ -9,6 +9,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
         }
         .container {
             max-width: 800px;
@@ -16,67 +18,272 @@
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            background-color: #f9f9f9;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
             text-align: center;
             margin-bottom: 20px;
+            color: #007bff;
         }
-        h2 {
+        h2, h3 {
             margin-top: 30px;
-        }
-        h3 {
-            margin-top: 20px;
+            color: #007bff;
         }
         p {
             margin-bottom: 10px;
+            line-height: 1.6;
         }
         pre {
             background-color: #f3f3f3;
             padding: 10px;
             border-radius: 5px;
             overflow-x: auto;
+            font-size: 0.9em;
+        }
+        code {
+            background-color: #f3f3f3;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .endpoint {
+            margin-bottom: 40px;
+        }
+        .example {
+            margin-bottom: 20px;
+        }
+        .example-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .response {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #007bff;
+        }
+        .description {
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #ff2600;
+        }
+        .request-header, .query-params, .request-body {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #28a745;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>API Documentation</h1>
-
+        <h1>API Documentation Healthcare Knowledge</h1>
+        <p class="description">API untuk proses kerja aplikasi Healthcare Knowledge</p>
         <h2>Users</h2>
-        <h3>GET /users</h3>
-        <p>Get all users.</p>
 
-        <h3>POST /users</h3>
-        <p>Register a new user.</p>
+        <div class="endpoint">
+            <h3>POST /users</h3>
+            <p>Register a new user.</p>
+            <div class="example">
+                <p class="example-title">Request body:</p>
+                <pre>{
+    "name": "John Doe",
+    "email": "johndoe@gmail.com",
+    "password": "1234567890",
+    "confpassword": "1234567890"
+}</pre>
+                <p class="example-title">Response body:</p>
+                <pre class="response">{
+    "msg": "Registrasi Berhasil"
+}</pre>
+            </div>
+        </div>
 
-        <h3>POST /login</h3>
-        <p>Login to the system.</p>
+        <div class="endpoint">
+            <h3>POST /login</h3>
+            <p>Login to the system.</p>
+            <div class="example">
+                <p class="example-title">Request body:</p>
+                <pre>{
+    "email": "johndoe@gmail.com",
+    "password": "1234567890"
+}</pre>
+                <p class="example-title">Response body:</p>
+                <pre class="response">{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}</pre>
+            </div>
+        </div>
 
-        <h3>GET /token</h3>
-        <p>Refresh access token.</p>
+        <div class="endpoint">
+            <h3>GET /token</h3>
+            <p>Refresh access token.</p>
+            <div class="example">
+                <p class="example-title">Response body:</p>
+                <pre class="response">{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}</pre>
+            </div>
+        </div>
 
-        <h3>DELETE /logout</h3>
-        <p>Logout from the system.</p>
+        <div class="endpoint">
+            <h3>DELETE /logout</h3>
+            <p>Logout from the system.</p>
+            <div class="example">
+                <p class="example-title">Response body:</p>
+                <pre class="response">{
+    "msg": "Telah logout"
+}</pre>
+            </div>
+        </div>
 
         <h2>Medicines</h2>
-        <h3>POST /medicines</h3>
-        <p>Create a new medicine.</p>
 
-        <h3>GET /medicinesdoctor</h3>
-        <p>Get medicines for doctors.</p>
+        <div class="endpoint">
+            <h3>POST /medicines</h3>
+            <p>Create a new medicine.</p>
+            <div class="example">
+                <p class="example-title">Request header:</p>
+                <pre class="request-header">{
+    "Content-Type": "application/json",
+    "Authorization": "Bearer {accessToken}"
+}</pre>
+                <p class="example-title">Request body:</p>
+                <pre>{
+    "name": "parasetamol",
+    "classTherapy": "ANALGESIK ANTIPIRETIK ANTIINFLAMASI NON STEROID ANTIPIRAI",
+    "subClassTherapy1": "ANALGESIK NON NARKOTIK",
+    "kekuatan": 500,
+    "unit": "mg/mL",
+    "type": "tablet",
+    "maximumPrescription": "180 tab/bulan."
+}</pre>
+                <p class="example-title">Response body:</p>
+                <pre class="response">{
+    "msg": "Data obat berhasil ditambahkan"
+}</pre>
+            </div>
+        </div>
 
-        <h3>PUT /medicines/:id</h3>
-        <p>Update a medicine by ID.</p>
+        <div class="endpoint">
+            <h3>GET /medicinesdoctor</h3>
+            <p>Get medicines for doctors.</p>
+            <div class="example">
+                <p class="example-title">Query parameters:</p>
+                <pre class="query-params">?limit=&page=&search=</pre>
+                <p class="example-title">Request header:</p>
+                <pre class="request-header">{
+    "Authorization": "Bearer {accessToken}"
+}</pre>
+                <p class="example-title">Response body:</p>
+                <pre class="response">{
+    "medicines": [
+        {
+            "id": 1,
+            "name": "parasetamol",
+            "class_therapy": "ANALGESIK ANTIPIRETIK ANTIINFLAMASI NON STEROID ANTIPIRAI",
+            "drug_restrictions": null
+        }
+    ],
+    "page": 1,
+    "limit": 10,
+    "totalPages": 1
+}</pre>
+            </div>
+        </div>
 
-        <h3>DELETE /medicines/:id</h3>
-        <p>Delete a medicine by ID.</p>
+        <div class="endpoint">
+            <h3>PUT /medicines/:id</h3>
+            <p>Update a medicine by ID.</p>
+            <div class="example">
+                <p class="example-title">Request header:</p>
+                <pre class="request-header">{
+    "Content-Type": "application/json",
+    "Authorization": "Bearer {accessToken}"
+}</pre>
+                <p class="example-title">Request body:</p>
+                <pre>{
+    "name": "betamason",
+    "classTherapy": "ANALGESIK ANTIPIRETIK ANTIINFLAMASI NON STEROID ANTIPIRAI",
+    "subClassTherapy1": "ANALGESIK NON NARKOTIK",
+    "kekuatan": 500,
+    "unit": "mg/mL",
+    "type": "tablet",
+    "maximumPrescription": "180 tab/bulan."
+}</pre>
+                <p class="example-title">Response body:</p>
+                <pre class="response">{
+    "msg": "Data obat berhasil diperbarui"
+}</pre>
+            </div>
+        </div>
 
-        <h3>GET /medicines</h3>
-        <p>Get all medicines.</p>
+        <div class="endpoint">
+            <h3>DELETE /medicines/:id</h3>
+            <p>Delete a medicine by ID.</p>
+            <div class="example">
+                <p class="example-title">Request header:</p>
+                <pre class="request-header">{
+    "Authorization": "Bearer {accessToken}"
+}</pre>
+                <p class="example-title">Response body:</p>
+                <pre class="response">{
+    "msg": "Data obat berhasil dihapus"
+}</pre>
+            </div>
+        </div>
 
-        <h3>GET /medicines/:id</h3>
-        <p>Get a medicine by ID.</p>
+        <div class="endpoint">
+            <h3>GET /medicines</h3>
+            <p>Get all medicines.</p>
+            <div class="example">
+                <p class="example-title">Query parameters:</p>
+                <pre class="query-params">?limit=&page=&search=</pre>
+                <p class="example-title">Response body:</p>
+                <pre class="response">{
+    "medicines": [
+        {
+            "id": 1,
+            "name": "parasetamol",
+            "class_therapy": "ANALGESIK ANTIPIRETIK ANTIINFLAMASI NON STEROID ANTIPIRAI",
+            "drug_restrictions": null
+        }
+    ],
+    "page": 1,
+    "limit": 10,
+    "totalPages": 1
+}</pre>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <h3>GET /medicines/:id</h3>
+            <p>Get a medicine by ID.</p>
+            <div class="example">
+                <p class="example-title">Response body:</p>
+                <pre class="response">{
+    "id": 1,
+    "name": "parasetamol",
+    "class_therapy": "ANALGESIK ANTIPIRETIK ANTIINFLAMASI NON STEROID ANTIPIRAI",
+    "subclass_therapy1": "ANALGESIK NON NARKOTIK",
+    "subclass_therapy2": null,
+    "subclass_therapy3": null,
+    "power": 500,
+    "unit": "mg/mL",
+    "type": "tablet",
+    "composition": null,
+    "drug_restrictions": null,
+    "maximum_prescription": "180 tab/bulan.",
+    "user_id": "xUYoYrV",
+    "createdAt": "2024-06-04T09:59:10.536Z",
+    "updatedAt": "2024-06-04T09:59:10.536Z"
+}</pre>
+            </div>
+        </div>
+
     </div>
 </body>
 </html>
