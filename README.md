@@ -39,3 +39,8 @@ To serve the application in production mode, use:
 ```bash
 npm run serve
 ```
+### How to Access API Endpoints
+To access the API endpoint documentation, please open this link in a browser.
+```bash
+http://localhost:5000/
+```
