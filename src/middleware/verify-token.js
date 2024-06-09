@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable import/extensions */
 import jwt from 'jsonwebtoken';
 import Users from '../models/user-models.js';
@@ -57,4 +58,18 @@ export const authorizeMedicineActions = async (req, res, next) => {
       msg: 'Terjadi kesalahan saat memverifikasi izin',
     });
   }
+};
+
+export const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.userId = user.userId;
+    req.role = user.role;
+    next();
+  });
 };

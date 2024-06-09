@@ -5,13 +5,23 @@ import Users from '../models/user-models.js';
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await Users.findAll({
+    if (req.role === 'admin') {
+      // Jika pengguna adalah admin, kembalikan semua data user
+      const users = await Users.findAll({
+        attributes: ['id', 'name', 'email'],
+      });
+      return res.json(users);
+    }
+    // Jika bukan admin, kembalikan data user yang sedang login
+    const user = await Users.findOne({
+      where: { id: req.userId },
       attributes: ['id', 'name', 'email'],
     });
-    res.json(users);
+    if (!user) return res.status(404).json({ msg: 'Pengguna tidak ditemukan' });
+    return res.json(user);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ msg: 'Terjadi kesalahan pada server' });
+    return res.status(500).json({ msg: 'Terjadi kesalahan pada server' });
   }
 };
 

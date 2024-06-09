@@ -3,7 +3,7 @@ import express from 'express';
 import {
   getUsers, Register, Login, Logout, changePassword,
 } from '../controllers/users.js';
-import { authorizeMedicineActions, verifyToken } from '../middleware/verify-token.js';
+import { authenticateToken, authorizeMedicineActions, verifyToken } from '../middleware/verify-token.js';
 import { refreshToken } from '../controllers/refresh-token.js';
 import {
   createMedicine, deleteMedicineById, getDetailMedicineById,
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 });
 
 // Register, Login, & change password Logout route
-router.get('/users', verifyToken, getUsers);
+router.get('/users', verifyToken, authenticateToken, getUsers);
 router.post('/users', Register);
 router.post('/login', Login);
 router.get('/token', refreshToken);
