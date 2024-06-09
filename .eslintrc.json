@@ -12,5 +12,7 @@
         "sourceType": "module"
     },
     "rules": {
+        "no-console": 0,
+        "no-restricted-syntax": ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"]
     }
 }
