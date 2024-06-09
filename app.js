@@ -11,14 +11,19 @@ import Users from './src/models/user-models.js';
 dotenv.config();
 
 const app = express();
-try {
-  await db.authenticate();
-  console.log('Database Connected...');
-  await Users.sync();
-  await Medicines.sync();
-} catch (error) {
-  console.error(error);
-}
+const initializeDatabase = async () => {
+  try {
+    await db.authenticate();
+    console.log('Database Connected...');
+    await Users.sync();
+    await Medicines.sync();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Memanggil fungsi inisialisasi database
+initializeDatabase();
 
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
