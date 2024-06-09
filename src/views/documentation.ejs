@@ -103,6 +103,23 @@
         </div>
 
         <div class="endpoint">
+            <h3>GET /users</h3>
+            <p>Get data user.</p>
+            <div class="example">
+                <p class="example-title">Request header:</p>
+                <pre class="request-header">{
+    "Authorization": "Bearer {accessToken}"
+}</pre>
+                <p class="example-title">Response body:</p>
+                <pre class="response">{
+    "id": "eopT5pm",
+    "name": "Halo",
+    "email": "keren@gmail.com"
+}</pre>
+            </div>
+        </div>
+
+        <div class="endpoint">
             <h3>POST /login</h3>
             <p>Login to the system.</p>
             <div class="example">
@@ -114,6 +131,28 @@
                 <p class="example-title">Response body:</p>
                 <pre class="response">{
     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}</pre>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <h3>PUT /password</h3>
+            <p>Change password user</p>
+            <div class="example">
+                <p class="example-title">Request header:</p>
+                <pre class="request-header">{
+    "Content-Type": "application/json",
+    "Authorization": "Bearer {accessToken}"
+}</pre>
+                <p class="example-title">Request body:</p>
+                <pre>{
+    "oldPassword" : "1234567890",
+    "newPassword" : "ayamgoreng",
+    "confNewPassword" : "ayamgoreng"
+}</pre>
+                <p class="example-title">Response body:</p>
+                <pre class="response">{
+    "msg": "Password berhasil diubah"
 }</pre>
             </div>
         </div>
