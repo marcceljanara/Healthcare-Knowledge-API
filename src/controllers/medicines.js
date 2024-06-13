@@ -63,9 +63,9 @@ export const getMedicines = async (req, res) => {
     if (searchQuery) {
       whereClause = {
         [Op.or]: [
-          { name: { [Op.like]: `%${searchQuery}%` } },
-          { class_therapy: { [Op.like]: `%${searchQuery}%` } },
-          { drug_restrictions: { [Op.like]: `%${searchQuery}%` } },
+          { name: { [Op.iLike]: `%${searchQuery}%` } },
+          { class_therapy: { [Op.iLike]: `%${searchQuery}%` } },
+          { drug_restrictions: { [Op.iLike]: `%${searchQuery}%` } },
         ],
       };
     }
@@ -120,9 +120,9 @@ export const getMedicinesDoctor = async (req, res) => {
       whereClause = {
         ...whereClause,
         [Op.or]: [
-          { name: { [Op.like]: `%${searchQuery}%` } },
-          { class_therapy: { [Op.like]: `%${searchQuery}%` } },
-          { drug_restrictions: { [Op.like]: `%${searchQuery}%` } },
+          { name: { [Op.iLike]: `%${searchQuery}%` } },
+          { class_therapy: { [Op.iLike]: `%${searchQuery}%` } },
+          { drug_restrictions: { [Op.iLike]: `%${searchQuery}%` } },
         ],
       };
     }
