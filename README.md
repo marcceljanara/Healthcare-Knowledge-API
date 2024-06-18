@@ -25,6 +25,7 @@ git clone https://github.com/marcceljanara/Healthcare-Knowledge-API.git
 ```
 then,
 ```bash
+cd Healthcare-Knowledge-API
 npm install
 ```
 
